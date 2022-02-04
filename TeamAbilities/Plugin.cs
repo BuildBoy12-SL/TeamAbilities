@@ -17,6 +17,13 @@ namespace TeamAbilities
     /// </summary>
     public class Plugin : Plugin<Config>
     {
+        private EventHandlers eventHandlers;
+
+        /// <summary>
+        /// Gets the only existing instance of the <see cref="Plugin"/> class.
+        /// </summary>
+        public static Plugin Instance { get; private set; }
+
         /// <inheritdoc />
         public override string Author => "Build";
 
@@ -35,13 +42,18 @@ namespace TeamAbilities
         /// <inheritdoc />
         public override void OnEnabled()
         {
-            Config.LoadRoleConfigs();
+            Instance = this;
+            eventHandlers = new EventHandlers();
+            eventHandlers.Subscribe();
             base.OnEnabled();
         }
 
         /// <inheritdoc />
         public override void OnDisabled()
         {
+            eventHandlers.Unsubscribe();
+            eventHandlers = null;
+            Instance = null;
             base.OnDisabled();
         }
     }

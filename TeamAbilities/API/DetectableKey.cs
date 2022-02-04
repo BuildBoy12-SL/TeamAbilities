@@ -1,16 +1,17 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="RoleConfigs.cs" company="Build">
+// <copyright file="DetectableKey.cs" company="Build">
 // Copyright (c) Build. All rights reserved.
 // Licensed under the CC BY-SA 3.0 license.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace TeamAbilities.Configs
+namespace TeamAbilities.API
 {
-    using TeamAbilities.Roles;
-
-    public class RoleConfigs
+    public enum DetectableKey
     {
-        public MtfTracker MtfTracker { get; set; } = new MtfTracker();
+        C,
+        V,
+        Q,
+        LAlt,
     }
 }
