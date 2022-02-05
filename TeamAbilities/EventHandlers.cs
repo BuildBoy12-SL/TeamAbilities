@@ -72,6 +72,7 @@ namespace TeamAbilities
         private void OnRoundStarted()
         {
             Ability.ClearAllCooldowns();
+            TeslaToggle.TeslasDisabled = false;
         }
     }
 }
