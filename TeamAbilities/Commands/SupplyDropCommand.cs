@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="SummonSupplyDrop.cs" company="Build">
+// <copyright file="SupplyDropCommand.cs" company="Build">
 // Copyright (c) Build. All rights reserved.
 // Licensed under the CC BY-SA 3.0 license.
 // </copyright>
@@ -12,7 +12,7 @@ namespace TeamAbilities.Commands
     using Exiled.API.Features;
 
     [CommandHandler(typeof(ClientCommandHandler))]
-    public class SummonSupplyDrop : ICommand
+    public class SupplyDropCommand : ICommand
     {
         /// <inheritdoc />
         public string Command => "supplydrop";
