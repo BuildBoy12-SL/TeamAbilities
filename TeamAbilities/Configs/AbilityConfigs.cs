@@ -12,20 +12,23 @@ namespace TeamAbilities.Configs
     public class AbilityConfigs
     {
         /// <summary>
-        /// Gets or sets an instance of the <see cref="Abilities.Hack"/> ability.
+        /// Gets or sets a configurable instance of the <see cref="Abilities.Hack"/> ability.
         /// </summary>
         public Hack Hack { get; set; } = new Hack();
 
         /// <summary>
-        /// Gets or sets an instance of the <see cref="Abilities.SupplyDrop"/> ability.
+        /// Gets or sets a configurable instance of the <see cref="Abilities.SupplyDrop"/> ability.
         /// </summary>
         public SupplyDrop SupplyDrop { get; set; } = new SupplyDrop();
 
         /// <summary>
-        /// Gets or sets an instance of the <see cref="Abilities.TeslaToggle"/> ability.
+        /// Gets or sets a configurable instance of the <see cref="Abilities.TeslaToggle"/> ability.
         /// </summary>
         public TeslaToggle TeslaToggle { get; set; } = new TeslaToggle();
 
+        /// <summary>
+        /// Registers all abilities.
+        /// </summary>
         public void RegisterAbilities()
         {
             Hack?.TryRegister();
@@ -33,6 +36,9 @@ namespace TeamAbilities.Configs
             TeslaToggle?.TryRegister();
         }
 
+        /// <summary>
+        /// Unregisters all abilities.
+        /// </summary>
         public void UnregisterAbilities()
         {
             Hack?.TryUnregister();

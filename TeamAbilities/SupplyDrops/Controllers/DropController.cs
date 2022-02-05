@@ -13,6 +13,9 @@ namespace TeamAbilities.SupplyDrops.Controllers
     using TeamAbilities.Abilities;
     using UnityEngine;
 
+    /// <summary>
+    /// The controller of a drop.
+    /// </summary>
     public class DropController : MonoBehaviour
     {
         private Rigidbody rigidbody;
@@ -20,8 +23,14 @@ namespace TeamAbilities.SupplyDrops.Controllers
         private bool crateOpened;
         private SupplyDrop config;
 
+        /// <summary>
+        /// Gets or sets the balloon of the drop.
+        /// </summary>
         public GameObject Balloon { get; set; }
 
+        /// <summary>
+        /// Gets or sets all faces of the drop.
+        /// </summary>
         public List<GameObject> Faces { get; set; }
 
         private void Start()

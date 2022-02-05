@@ -9,6 +9,9 @@ namespace TeamAbilities.SupplyDrops.Controllers
 {
     using UnityEngine;
 
+    /// <summary>
+    /// The controller of a drop's balloon.
+    /// </summary>
     public class BalloonController : MonoBehaviour
     {
         private float startPos;
