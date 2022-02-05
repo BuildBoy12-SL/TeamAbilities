@@ -9,13 +9,14 @@ namespace TeamAbilities
 {
     using System;
     using Exiled.API.Features;
+    using UnityEngine;
     using PlayerHandlers = Exiled.Events.Handlers.Player;
     using ServerHandlers = Exiled.Events.Handlers.Server;
 
     /// <summary>
     /// The main plugin class.
     /// </summary>
-    public class Plugin : Plugin<Config>
+    public class Plugin : Plugin<Config, Translation>
     {
         private EventHandlers eventHandlers;
 
@@ -43,18 +44,39 @@ namespace TeamAbilities
         public override void OnEnabled()
         {
             Instance = this;
-            eventHandlers = new EventHandlers();
+
+            RegisterAbilities();
+
+            eventHandlers = new EventHandlers(this);
             eventHandlers.Subscribe();
+
+            Physics.IgnoreLayerCollision(Config.SupplyDrop.DropLayer, 16);
             base.OnEnabled();
         }
 
         /// <inheritdoc />
         public override void OnDisabled()
         {
+            Physics.IgnoreLayerCollision(Config.SupplyDrop.DropLayer, 16, false);
+
             eventHandlers.Unsubscribe();
             eventHandlers = null;
+
+            UnregisterAbilities();
+
             Instance = null;
+
             base.OnDisabled();
+        }
+
+        private void RegisterAbilities()
+        {
+            Config.SupplyDrop?.TryRegister();
+        }
+
+        private void UnregisterAbilities()
+        {
+            Config.SupplyDrop?.TryUnregister();
         }
     }
 }

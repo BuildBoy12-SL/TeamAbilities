@@ -9,6 +9,7 @@ namespace TeamAbilities
 {
     using System.ComponentModel;
     using Exiled.API.Interfaces;
+    using TeamAbilities.Abilities;
     using TeamAbilities.Configs;
 
     /// <inheritdoc />
@@ -23,6 +24,11 @@ namespace TeamAbilities
         [Description("Indicates whether debug messages should be shown.")]
         public bool ShowDebug { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets all configs used for the <see cref="Components.ScientistLocatorComponent"/>.
+        /// </summary>
         public ScientistLocatorConfig ScientistLocator { get; set; } = new ScientistLocatorConfig();
+
+        public SupplyDrop SupplyDrop { get; set; } = new SupplyDrop();
     }
 }

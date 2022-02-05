@@ -7,6 +7,7 @@
 
 namespace TeamAbilities.Configs
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
 
     /// <summary>
@@ -14,6 +15,18 @@ namespace TeamAbilities.Configs
     /// </summary>
     public class ScientistLocatorConfig
     {
+        /// <summary>
+        /// Gets or sets a collection of roles that should have the locator ability.
+        /// </summary>
+        [Description("Roles that should have the locator ability.")]
+        public List<RoleType> Roles { get; set; } = new List<RoleType>
+        {
+            RoleType.NtfCaptain,
+            RoleType.NtfSpecialist,
+            RoleType.NtfSergeant,
+            RoleType.NtfPrivate,
+        };
+
         /// <summary>
         /// Gets or sets a value indicating whether only scientists in the same zone will be tracked.
         /// </summary>
