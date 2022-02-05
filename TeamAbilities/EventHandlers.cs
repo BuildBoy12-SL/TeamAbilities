@@ -53,7 +53,7 @@ namespace TeamAbilities
             if (ev.Player.GameObject.TryGetComponent(out ScientistLocatorComponent scientistLocatorComponent))
                 Object.Destroy(scientistLocatorComponent);
 
-            if (ev.IsAllowed && ev.Player.Role == RoleType.NtfCaptain && plugin.Config.TeslaToggle.RestoreOnDeath)
+            if (ev.IsAllowed && ev.Player.Role == RoleType.NtfCaptain && plugin.Config.AbilityConfigs.TeslaToggle.RestoreOnDeath)
                 TeslaToggle.TeslasDisabled = false;
 
             if (ev.NewRole == RoleType.NtfCaptain && plugin.Config.SingleCommander && Player.Get(RoleType.NtfCaptain).Any())

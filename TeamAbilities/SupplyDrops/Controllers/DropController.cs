@@ -26,7 +26,7 @@ namespace TeamAbilities.SupplyDrops.Controllers
 
         private void Start()
         {
-            config = Plugin.Instance.Config.SupplyDrop;
+            config = Plugin.Instance.Config.AbilityConfigs.SupplyDrop;
 
             ChangeLayers(transform, config.DropLayer);
 

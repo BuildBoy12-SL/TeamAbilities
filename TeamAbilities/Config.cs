@@ -9,7 +9,6 @@ namespace TeamAbilities
 {
     using System.ComponentModel;
     using Exiled.API.Interfaces;
-    using TeamAbilities.Abilities;
     using TeamAbilities.Configs;
 
     /// <inheritdoc />
@@ -29,14 +28,8 @@ namespace TeamAbilities
         /// </summary>
         public ScientistLocatorConfig ScientistLocator { get; set; } = new ScientistLocatorConfig();
 
-        /// <summary>
-        /// Gets or sets an instance of the <see cref="Abilities.SupplyDrop"/> ability.
-        /// </summary>
-        public SupplyDrop SupplyDrop { get; set; } = new SupplyDrop();
+        public AbilityConfigs AbilityConfigs { get; set; } = new AbilityConfigs();
 
-        /// <summary>
-        /// Gets or sets an instance of the <see cref="Abilities.TeslaToggle"/> ability.
-        /// </summary>
-        public TeslaToggle TeslaToggle { get; set; } = new TeslaToggle();
+        public CommandConfigs CommandConfigs { get; set; } = new CommandConfigs();
     }
 }

@@ -45,38 +45,29 @@ namespace TeamAbilities
         {
             Instance = this;
 
-            RegisterAbilities();
+            Config.AbilityConfigs.RegisterAbilities();
+            Config.CommandConfigs.RegisterCommands();
 
             eventHandlers = new EventHandlers(this);
             eventHandlers.Subscribe();
 
-            Physics.IgnoreLayerCollision(Config.SupplyDrop.DropLayer, 16);
+            Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16);
             base.OnEnabled();
         }
 
         /// <inheritdoc />
         public override void OnDisabled()
         {
-            Physics.IgnoreLayerCollision(Config.SupplyDrop.DropLayer, 16, false);
+            Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16, false);
 
             eventHandlers.Unsubscribe();
             eventHandlers = null;
 
-            UnregisterAbilities();
+            Config.AbilityConfigs.UnregisterAbilities();
 
             Instance = null;
 
             base.OnDisabled();
-        }
-
-        private void RegisterAbilities()
-        {
-            Config.SupplyDrop?.TryRegister();
-        }
-
-        private void UnregisterAbilities()
-        {
-            Config.SupplyDrop?.TryUnregister();
         }
     }
 }

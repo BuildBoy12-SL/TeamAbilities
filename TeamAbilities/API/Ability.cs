@@ -34,7 +34,7 @@ namespace TeamAbilities.API
         /// <summary>
         /// Gets or sets a collection of roles that can use the ability.
         /// </summary>
-        public abstract List<RoleType> RequiredRoles { get; set; }
+        public abstract HashSet<RoleType> RequiredRoles { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the cooldown will apply to all users instead of individuals.
@@ -97,10 +97,11 @@ namespace TeamAbilities.API
         /// </summary>
         /// <param name="sender">The sender of the command.</param>
         /// <param name="response">The message to return to the sender.</param>
+        /// <param name="bypassRoleCheck">Whether the role check should be ignored.</param>
         /// <returns>A value indicating whether the ability was executed.</returns>
-        public virtual bool Execute(Player sender, out string response)
+        public virtual bool Execute(Player sender, out string response, bool bypassRoleCheck = false)
         {
-            if (RequiredRoles == null || !RequiredRoles.Contains(sender.Role))
+            if (!bypassRoleCheck && (RequiredRoles == null || !RequiredRoles.Contains(sender.Role)))
             {
                 response = Plugin.Instance.Translation.IncorrectRole;
                 return false;

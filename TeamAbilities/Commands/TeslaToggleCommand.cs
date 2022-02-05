@@ -11,7 +11,6 @@ namespace TeamAbilities.Commands
     using CommandSystem;
     using Exiled.API.Features;
 
-    [CommandHandler(typeof(ClientCommandHandler))]
     public class TeslaToggleCommand : ICommand
     {
         /// <inheritdoc />
@@ -33,7 +32,7 @@ namespace TeamAbilities.Commands
                 return false;
             }
 
-            return Plugin.Instance.Config.TeslaToggle.Execute(player, out response);
+            return Plugin.Instance.Config.AbilityConfigs.TeslaToggle.Execute(player, out response);
         }
     }
 }

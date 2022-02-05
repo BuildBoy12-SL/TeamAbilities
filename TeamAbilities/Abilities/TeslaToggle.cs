@@ -25,7 +25,7 @@ namespace TeamAbilities.Abilities
         public override string Name { get; set; } = "Tesla Toggle";
 
         /// <inheritdoc />
-        public override List<RoleType> RequiredRoles { get; set; } = new List<RoleType>
+        public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>
         {
             RoleType.NtfCaptain,
         };

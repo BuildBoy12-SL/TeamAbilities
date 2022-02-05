@@ -21,7 +21,7 @@ namespace TeamAbilities.Abilities
         public override string Name { get; set; } = "Supply Drop";
 
         /// <inheritdoc />
-        public override List<RoleType> RequiredRoles { get; set; } = new List<RoleType>
+        public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>
         {
             RoleType.NtfSergeant,
         };
