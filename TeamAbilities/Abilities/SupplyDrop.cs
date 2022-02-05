@@ -42,11 +42,13 @@ namespace TeamAbilities.Abilities
         /// <summary>
         /// Gets or sets the collision layer to use for the supply drop.
         /// </summary>
+        [Description("The collision layer to use for the supply drop.")]
         public int DropLayer { get; set; } = 6;
 
         /// <summary>
         /// Gets or sets the items that can spawn in the drop.
         /// </summary>
+        [Description("The items that can spawn in the drop.")]
         public List<ItemType> PossibleItems { get; set; } = new List<ItemType>
         {
             ItemType.GunCrossvec,
@@ -58,6 +60,7 @@ namespace TeamAbilities.Abilities
         /// <summary>
         /// Gets or sets the amount of items to drop.
         /// </summary>
+        [Description("The amount of items to drop.")]
         public int DroppedItems { get; set; } = 1;
 
         /// <summary>

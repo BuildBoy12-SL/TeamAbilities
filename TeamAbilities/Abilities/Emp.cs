@@ -8,6 +8,7 @@
 namespace TeamAbilities.Abilities
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using Exiled.API.Enums;
     using Exiled.API.Features;
     using Exiled.Events.EventArgs;
@@ -50,11 +51,13 @@ namespace TeamAbilities.Abilities
         /// <summary>
         /// Gets or sets the duration, in seconds, of the blackout.
         /// </summary>
+        [Description("The duration, in seconds, of the balackout.")]
         public float Duration { get; set; } = 60f;
 
         /// <summary>
-        /// Gets or sets the doors which will be immune to the emp's effects.
+        /// Gets or sets the doors which will be immune to the EMP's effects.
         /// </summary>
+        [Description("The doors which will be immune to the EMP's effects.")]
         public List<DoorType> ImmuneDoors { get; set; } = new List<DoorType>
         {
             DoorType.NukeSurface,
@@ -65,6 +68,7 @@ namespace TeamAbilities.Abilities
         /// <summary>
         /// Gets or sets the color of the lights when they're affected by the EMP.
         /// </summary>
+        [Description("The color of the lights when they're affected by the EMP.")]
         public SerializableColor Color { get; set; } = new SerializableColor(0.6f, 0.1f, 0.1f);
 
         /// <summary>
