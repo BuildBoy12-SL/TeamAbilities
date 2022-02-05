@@ -74,6 +74,7 @@ namespace TeamAbilities.API
             }
 
             Registered.Add(this);
+            SubscribeEvents();
             return true;
         }
 
@@ -83,6 +84,7 @@ namespace TeamAbilities.API
         /// <returns>A value indicating whether the <see cref="Ability"/> was unregistered or not.</returns>
         public bool TryUnregister()
         {
+            UnsubscribeEvents();
             if (!Registered.Remove(this))
             {
                 Log.Warn($"Cannot unregister an ability with the name of {Name} as it was not registered!");
@@ -153,6 +155,20 @@ namespace TeamAbilities.API
 
             remainingTime = 0f;
             return false;
+        }
+
+        /// <summary>
+        /// Subscribes to all required events.
+        /// </summary>
+        protected virtual void SubscribeEvents()
+        {
+        }
+
+        /// <summary>
+        /// Unsubscribes from all required events.
+        /// </summary>
+        protected virtual void UnsubscribeEvents()
+        {
         }
 
         private void SetCooldown(Player sender)

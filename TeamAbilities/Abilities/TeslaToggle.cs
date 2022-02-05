@@ -10,17 +10,13 @@ namespace TeamAbilities.Abilities
     using System.Collections.Generic;
     using System.ComponentModel;
     using Exiled.API.Features;
+    using Exiled.Events.EventArgs;
     using TeamAbilities.API;
-    using YamlDotNet.Serialization;
 
     /// <inheritdoc />
     public class TeslaToggle : Ability
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether tesla gates should be disabled.
-        /// </summary>
-        [YamlIgnore]
-        public bool TeslasDisabled { get; set; }
+        private bool teslasDisabled;
 
         /// <inheritdoc />
         public override string Name { get; set; } = "Tesla Toggle";
@@ -49,11 +45,46 @@ namespace TeamAbilities.Abilities
         public TeslaToggleTranslations Translations { get; set; } = new TeslaToggleTranslations();
 
         /// <inheritdoc />
+        protected override void SubscribeEvents()
+        {
+            Exiled.Events.Handlers.Player.ChangingRole += OnChangingRole;
+            Exiled.Events.Handlers.Player.TriggeringTesla += OnTriggeringTesla;
+            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+            base.SubscribeEvents();
+        }
+
+        /// <inheritdoc />
+        protected override void UnsubscribeEvents()
+        {
+            Exiled.Events.Handlers.Player.ChangingRole -= OnChangingRole;
+            Exiled.Events.Handlers.Player.TriggeringTesla -= OnTriggeringTesla;
+            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+            base.UnsubscribeEvents();
+        }
+
+        /// <inheritdoc />
         protected override bool RunAbility(Player player, out string response)
         {
-            TeslasDisabled = !TeslasDisabled;
-            response = TeslasDisabled ? Translations.TeslasDisabled : Translations.TeslasEnabled;
+            teslasDisabled = !teslasDisabled;
+            response = teslasDisabled ? Translations.TeslasDisabled : Translations.TeslasEnabled;
             return true;
+        }
+
+        private void OnChangingRole(ChangingRoleEventArgs ev)
+        {
+            if (ev.IsAllowed && ev.Player.Role == RoleType.NtfCaptain && RestoreOnDeath)
+                teslasDisabled = false;
+        }
+
+        private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
+        {
+            if (teslasDisabled)
+                ev.IsTriggerable = false;
+        }
+
+        private void OnRoundStarted()
+        {
+            teslasDisabled = false;
         }
 
         /// <summary>

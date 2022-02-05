@@ -10,6 +10,7 @@ namespace TeamAbilities.Abilities
     using System.Collections.Generic;
     using Exiled.API.Enums;
     using Exiled.API.Features;
+    using Exiled.Events.EventArgs;
     using MEC;
     using TeamAbilities.API;
     using YamlDotNet.Serialization;
@@ -18,18 +19,8 @@ namespace TeamAbilities.Abilities
     public class Emp : Ability
     {
         private int uses;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the emp is enabled.
-        /// </summary>
-        [YamlIgnore]
-        public bool EmpEnabled { get; set; }
-
-        /// <summary>
-        /// Gets the coroutine controlling the delay before the emp is disabled.
-        /// </summary>
-        [YamlIgnore]
-        public CoroutineHandle EmpCoroutine { get; private set; }
+        private CoroutineHandle empCoroutine;
+        private bool empEnabled;
 
         /// <inheritdoc />
         public override string Name { get; set; } = "EMP";
@@ -82,6 +73,22 @@ namespace TeamAbilities.Abilities
         public EmpTranslations Translations { get; set; } = new EmpTranslations();
 
         /// <inheritdoc />
+        protected override void SubscribeEvents()
+        {
+            Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
+            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+            base.SubscribeEvents();
+        }
+
+        /// <inheritdoc />
+        protected override void UnsubscribeEvents()
+        {
+            Exiled.Events.Handlers.Player.InteractingDoor -= OnInteractingDoor;
+            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+            base.UnsubscribeEvents();
+        }
+
+        /// <inheritdoc />
         protected override bool RunAbility(Player player, out string response)
         {
             if (uses >= UsesPerRound)
@@ -91,8 +98,8 @@ namespace TeamAbilities.Abilities
             }
 
             uses++;
-            EmpEnabled = true;
-            EmpCoroutine = Timing.RunCoroutine(RunEmp());
+            empEnabled = true;
+            empCoroutine = Timing.RunCoroutine(RunEmp());
             response = Translations.UsedSuccessfully;
             return true;
         }
@@ -103,9 +110,21 @@ namespace TeamAbilities.Abilities
                 room.Color = Color;
 
             yield return Timing.WaitForSeconds(Duration);
-            EmpEnabled = false;
+            empEnabled = false;
             foreach (Room room in Map.Rooms)
                 room.ResetColor();
+        }
+
+        private void OnInteractingDoor(InteractingDoorEventArgs ev)
+        {
+            if (empEnabled && !ImmuneDoors.Contains(ev.Door.Type))
+                ev.IsAllowed = true;
+        }
+
+        private void OnRoundStarted()
+        {
+            if (empCoroutine.IsRunning)
+                Timing.KillCoroutines(empCoroutine);
         }
 
         /// <summary>
