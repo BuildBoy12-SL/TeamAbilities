@@ -20,7 +20,7 @@ namespace TeamAbilities.Abilities
         /// Gets or sets a value indicating whether tesla gates should be disabled.
         /// </summary>
         [YamlIgnore]
-        public static bool TeslasDisabled { get; set; }
+        public bool TeslasDisabled { get; set; }
 
         /// <inheritdoc />
         public override string Name { get; set; } = "Tesla Toggle";

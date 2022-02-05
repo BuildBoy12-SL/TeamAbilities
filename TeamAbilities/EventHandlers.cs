@@ -10,7 +10,7 @@ namespace TeamAbilities
     using System.Linq;
     using Exiled.API.Features;
     using Exiled.Events.EventArgs;
-    using TeamAbilities.Abilities;
+    using MEC;
     using TeamAbilities.API;
     using TeamAbilities.Components;
     using UnityEngine;
@@ -34,6 +34,7 @@ namespace TeamAbilities
         public void Subscribe()
         {
             Exiled.Events.Handlers.Player.ChangingRole += OnChangingRole;
+            Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
             Exiled.Events.Handlers.Player.TriggeringTesla += OnTriggeringTesla;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
         }
@@ -44,6 +45,7 @@ namespace TeamAbilities
         public void Unsubscribe()
         {
             Exiled.Events.Handlers.Player.ChangingRole -= OnChangingRole;
+            Exiled.Events.Handlers.Player.InteractingDoor -= OnInteractingDoor;
             Exiled.Events.Handlers.Player.TriggeringTesla -= OnTriggeringTesla;
             Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
         }
@@ -54,7 +56,7 @@ namespace TeamAbilities
                 Object.Destroy(scientistLocatorComponent);
 
             if (ev.IsAllowed && ev.Player.Role == RoleType.NtfCaptain && plugin.Config.AbilityConfigs.TeslaToggle.RestoreOnDeath)
-                TeslaToggle.TeslasDisabled = false;
+                plugin.Config.AbilityConfigs.TeslaToggle.TeslasDisabled = false;
 
             if (ev.NewRole == RoleType.NtfCaptain && plugin.Config.SingleCommander && Player.Get(RoleType.NtfCaptain).Any())
                 ev.NewRole = RoleType.NtfSergeant;
@@ -63,16 +65,24 @@ namespace TeamAbilities
                 ev.Player.GameObject.AddComponent<ScientistLocatorComponent>();
         }
 
+        private void OnInteractingDoor(InteractingDoorEventArgs ev)
+        {
+            if (plugin.Config.AbilityConfigs.Emp.EmpEnabled && !plugin.Config.AbilityConfigs.Emp.ImmuneDoors.Contains(ev.Door.Type))
+                ev.IsAllowed = true;
+        }
+
         private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (TeslaToggle.TeslasDisabled)
+            if (plugin.Config.AbilityConfigs.TeslaToggle.TeslasDisabled)
                 ev.IsTriggerable = false;
         }
 
         private void OnRoundStarted()
         {
             Ability.ClearAllCooldowns();
-            TeslaToggle.TeslasDisabled = false;
+            plugin.Config.AbilityConfigs.TeslaToggle.TeslasDisabled = false;
+            if (plugin.Config.AbilityConfigs.Emp.EmpCoroutine.IsRunning)
+                Timing.KillCoroutines(plugin.Config.AbilityConfigs.Emp.EmpCoroutine);
         }
     }
 }

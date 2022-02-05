@@ -8,7 +8,9 @@
 namespace TeamAbilities.Abilities
 {
     using System.Collections.Generic;
+    using Exiled.API.Enums;
     using Exiled.API.Features;
+    using MEC;
     using TeamAbilities.API;
     using YamlDotNet.Serialization;
 
@@ -16,6 +18,18 @@ namespace TeamAbilities.Abilities
     public class Emp : Ability
     {
         private int uses;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the emp is enabled.
+        /// </summary>
+        [YamlIgnore]
+        public bool EmpEnabled { get; set; }
+
+        /// <summary>
+        /// Gets the coroutine controlling the delay before the emp is disabled.
+        /// </summary>
+        [YamlIgnore]
+        public CoroutineHandle EmpCoroutine { get; private set; }
 
         /// <inheritdoc />
         public override string Name { get; set; } = "EMP";
@@ -43,6 +57,26 @@ namespace TeamAbilities.Abilities
         public override int Cooldown { get; set; }
 
         /// <summary>
+        /// Gets or sets the duration, in seconds, of the blackout.
+        /// </summary>
+        public float Duration { get; set; } = 60f;
+
+        /// <summary>
+        /// Gets or sets the doors which will be immune to the emp's effects.
+        /// </summary>
+        public List<DoorType> ImmuneDoors { get; set; } = new List<DoorType>
+        {
+            DoorType.NukeSurface,
+            DoorType.Scp079First,
+            DoorType.Scp079Second,
+        };
+
+        /// <summary>
+        /// Gets or sets the color of the lights when they're affected by the EMP.
+        /// </summary>
+        public SerializableColor Color { get; set; } = new SerializableColor(0.6f, 0.1f, 0.1f);
+
+        /// <summary>
         /// Gets or sets the translations to use in the ability.
         /// </summary>
         public EmpTranslations Translations { get; set; } = new EmpTranslations();
@@ -57,8 +91,21 @@ namespace TeamAbilities.Abilities
             }
 
             uses++;
+            EmpEnabled = true;
+            EmpCoroutine = Timing.RunCoroutine(RunEmp());
             response = Translations.UsedSuccessfully;
             return true;
+        }
+
+        private IEnumerator<float> RunEmp()
+        {
+            foreach (Room room in Map.Rooms)
+                room.Color = Color;
+
+            yield return Timing.WaitForSeconds(Duration);
+            EmpEnabled = false;
+            foreach (Room room in Map.Rooms)
+                room.ResetColor();
         }
 
         /// <summary>
