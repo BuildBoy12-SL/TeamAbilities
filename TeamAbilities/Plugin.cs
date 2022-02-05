@@ -64,6 +64,7 @@ namespace TeamAbilities
             eventHandlers = null;
 
             Config.AbilityConfigs.UnregisterAbilities();
+            Config.CommandConfigs.UnregisterCommands();
 
             Instance = null;
 

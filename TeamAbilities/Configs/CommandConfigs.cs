@@ -33,5 +33,14 @@ namespace TeamAbilities.Configs
             QueryProcessor.DotCommandHandler.RegisterCommand(SupplyDrop);
             QueryProcessor.DotCommandHandler.RegisterCommand(TeslaToggle);
         }
+
+        /// <summary>
+        /// Registers all commands.
+        /// </summary>
+        public void UnregisterCommands()
+        {
+            QueryProcessor.DotCommandHandler.UnregisterCommand(SupplyDrop);
+            QueryProcessor.DotCommandHandler.UnregisterCommand(TeslaToggle);
+        }
     }
 }
