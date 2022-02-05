@@ -16,6 +16,11 @@ namespace TeamAbilities.Configs
     public class CommandConfigs
     {
         /// <summary>
+        /// Gets or sets a configurable instance of the <see cref="EmpCommand"/> command.
+        /// </summary>
+        public EmpCommand Emp { get; set; } = new EmpCommand();
+
+        /// <summary>
         /// Gets or sets a configurable instance of the <see cref="SupplyDropCommand"/> command.
         /// </summary>
         public SupplyDropCommand SupplyDrop { get; set; } = new SupplyDropCommand();
@@ -30,6 +35,7 @@ namespace TeamAbilities.Configs
         /// </summary>
         public void RegisterCommands()
         {
+            QueryProcessor.DotCommandHandler.RegisterCommand(Emp);
             QueryProcessor.DotCommandHandler.RegisterCommand(SupplyDrop);
             QueryProcessor.DotCommandHandler.RegisterCommand(TeslaToggle);
         }
@@ -39,6 +45,7 @@ namespace TeamAbilities.Configs
         /// </summary>
         public void UnregisterCommands()
         {
+            QueryProcessor.DotCommandHandler.UnregisterCommand(Emp);
             QueryProcessor.DotCommandHandler.UnregisterCommand(SupplyDrop);
             QueryProcessor.DotCommandHandler.UnregisterCommand(TeslaToggle);
         }
