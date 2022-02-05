@@ -123,15 +123,6 @@ namespace TeamAbilities.API
         }
 
         /// <summary>
-        /// Clears the cooldowns globally.
-        /// </summary>
-        protected void ClearCooldowns()
-        {
-            cooldowns.Clear();
-            globalCooldown = 0f;
-        }
-
-        /// <summary>
         /// Runs the main method of the ability.
         /// </summary>
         /// <param name="player">The player who ran the ability.</param>
@@ -167,6 +158,15 @@ namespace TeamAbilities.API
         {
             cooldowns[sender] = Time.time + Cooldown;
             globalCooldown = Time.time + Cooldown;
+        }
+
+        /// <summary>
+        /// Clears the cooldowns globally.
+        /// </summary>
+        private void ClearCooldowns()
+        {
+            cooldowns.Clear();
+            globalCooldown = 0f;
         }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace TeamAbilities
 {
+    using System.Linq;
+    using Exiled.API.Features;
     using Exiled.Events.EventArgs;
+    using TeamAbilities.Abilities;
     using TeamAbilities.API;
     using TeamAbilities.Components;
     using UnityEngine;
@@ -31,6 +34,7 @@ namespace TeamAbilities
         public void Subscribe()
         {
             Exiled.Events.Handlers.Player.ChangingRole += OnChangingRole;
+            Exiled.Events.Handlers.Player.TriggeringTesla += OnTriggeringTesla;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
         }
 
@@ -40,6 +44,7 @@ namespace TeamAbilities
         public void Unsubscribe()
         {
             Exiled.Events.Handlers.Player.ChangingRole -= OnChangingRole;
+            Exiled.Events.Handlers.Player.TriggeringTesla -= OnTriggeringTesla;
             Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
         }
 
@@ -48,8 +53,20 @@ namespace TeamAbilities
             if (ev.Player.GameObject.TryGetComponent(out ScientistLocatorComponent scientistLocatorComponent))
                 Object.Destroy(scientistLocatorComponent);
 
+            if (ev.IsAllowed && ev.Player.Role == RoleType.NtfCaptain && plugin.Config.TeslaToggle.RestoreOnDeath)
+                TeslaToggle.TeslasDisabled = false;
+
+            if (ev.NewRole == RoleType.NtfCaptain && plugin.Config.SingleCommander && Player.Get(RoleType.NtfCaptain).Any())
+                ev.NewRole = RoleType.NtfSergeant;
+
             if (ev.IsAllowed && plugin.Config.ScientistLocator.Roles.Contains(ev.NewRole))
                 ev.Player.GameObject.AddComponent<ScientistLocatorComponent>();
+        }
+
+        private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
+        {
+            if (TeslaToggle.TeslasDisabled)
+                ev.IsTriggerable = false;
         }
 
         private void OnRoundStarted()
