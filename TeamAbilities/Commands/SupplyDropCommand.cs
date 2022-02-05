@@ -11,6 +11,7 @@ namespace TeamAbilities.Commands
     using CommandSystem;
     using Exiled.API.Features;
 
+    /// <inheritdoc />
     public class SupplyDropCommand : ICommand
     {
         /// <inheritdoc />

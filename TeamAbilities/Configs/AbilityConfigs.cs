@@ -9,8 +9,16 @@ namespace TeamAbilities.Configs
 {
     using TeamAbilities.Abilities;
 
+    /// <summary>
+    /// All ability configs.
+    /// </summary>
     public class AbilityConfigs
     {
+        /// <summary>
+        /// Gets or sets a configurable instance of the <see cref="Abilities.Emp"/> ability.
+        /// </summary>
+        public Emp Emp { get; set; } = new Emp();
+
         /// <summary>
         /// Gets or sets a configurable instance of the <see cref="Abilities.Hack"/> ability.
         /// </summary>
@@ -31,6 +39,7 @@ namespace TeamAbilities.Configs
         /// </summary>
         public void RegisterAbilities()
         {
+            Emp?.TryRegister();
             Hack?.TryRegister();
             SupplyDrop?.TryRegister();
             TeslaToggle?.TryRegister();
@@ -41,6 +50,7 @@ namespace TeamAbilities.Configs
         /// </summary>
         public void UnregisterAbilities()
         {
+            Emp?.TryUnregister();
             Hack?.TryUnregister();
             SupplyDrop?.TryUnregister();
             TeslaToggle?.TryUnregister();

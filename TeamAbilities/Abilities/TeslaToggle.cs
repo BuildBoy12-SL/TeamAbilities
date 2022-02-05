@@ -13,6 +13,7 @@ namespace TeamAbilities.Abilities
     using TeamAbilities.API;
     using YamlDotNet.Serialization;
 
+    /// <inheritdoc />
     public class TeslaToggle : Ability
     {
         /// <summary>
@@ -42,6 +43,9 @@ namespace TeamAbilities.Abilities
         [Description("Whether tesla gates will enable when the captain dies.")]
         public bool RestoreOnDeath { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets the translations to use in the ability.
+        /// </summary>
         public TeslaToggleTranslations Translations { get; set; } = new TeslaToggleTranslations();
 
         /// <inheritdoc />
@@ -52,10 +56,19 @@ namespace TeamAbilities.Abilities
             return true;
         }
 
+        /// <summary>
+        /// Contains translatable strings for the <see cref="TeslaToggle"/> ability.
+        /// </summary>
         public class TeslaToggleTranslations
         {
-            public string TeslasEnabled { get; set; } = "Tesla gates have been reenabled.";
+            /// <summary>
+            /// Gets or sets the response to send to a player when they enable the tesla gates.
+            /// </summary>
+            public string TeslasEnabled { get; set; } = "Tesla gates have been enabled.";
 
+            /// <summary>
+            /// Gets or sets the response to send to a player when they disable the tesla gates.
+            /// </summary>
             public string TeslasDisabled { get; set; } = "Tesla gates have been disabled.";
         }
     }

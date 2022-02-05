@@ -10,7 +10,9 @@ namespace TeamAbilities.Abilities
     using System.Collections.Generic;
     using Exiled.API.Features;
     using TeamAbilities.API;
+    using YamlDotNet.Serialization;
 
+    /// <inheritdoc />
     public class Hack : Ability
     {
         /// <inheritdoc />
@@ -26,10 +28,17 @@ namespace TeamAbilities.Abilities
         };
 
         /// <inheritdoc />
+        [YamlIgnore]
         public override bool GlobalCooldown { get; set; } = true;
 
         /// <inheritdoc />
-        public override int Cooldown { get; set; } = 0;
+        [YamlIgnore]
+        public override int Cooldown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the translations to use in the ability.
+        /// </summary>
+        public HackTranslations Translations { get; set; } = new HackTranslations();
 
         /// <inheritdoc />
         protected override bool RunAbility(Player player, out string response)
@@ -37,6 +46,9 @@ namespace TeamAbilities.Abilities
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// Contains translatable strings for the <see cref="Hack"/> ability.
+        /// </summary>
         public class HackTranslations
         {
         }

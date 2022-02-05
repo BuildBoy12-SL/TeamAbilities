@@ -28,8 +28,14 @@ namespace TeamAbilities
         /// </summary>
         public ScientistLocatorConfig ScientistLocator { get; set; } = new ScientistLocatorConfig();
 
+        /// <summary>
+        /// Gets or sets all configs related to abilities.
+        /// </summary>
         public AbilityConfigs AbilityConfigs { get; set; } = new AbilityConfigs();
 
+        /// <summary>
+        /// Gets or sets all configs related to commands.
+        /// </summary>
         public CommandConfigs CommandConfigs { get; set; } = new CommandConfigs();
     }
 }

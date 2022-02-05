@@ -15,6 +15,7 @@ namespace TeamAbilities.Abilities
     using TeamAbilities.SupplyDrops.Data;
     using UnityEngine;
 
+    /// <inheritdoc />
     public class SupplyDrop : Ability
     {
         /// <inheritdoc />
@@ -79,10 +80,19 @@ namespace TeamAbilities.Abilities
             return true;
         }
 
+        /// <summary>
+        /// Contains translatable strings for the <see cref="SupplyDrop"/> ability.
+        /// </summary>
         public class SupplyDropTranslations
         {
+            /// <summary>
+            /// Gets or sets the response to be sent to a player when they summon a supply drop.
+            /// </summary>
             public string SpawnedSuccessfully { get; set; } = "Supply drop spawned successfully.";
 
+            /// <summary>
+            /// Gets or sets the response to be sent to a player when they are not on the surface and <see cref="SupplyDrop.SurfaceOnly"/> is enabled.
+            /// </summary>
             public string SurfaceOnly { get; set; } = "This command may only be used on the surface.";
         }
     }
