@@ -9,6 +9,7 @@ namespace TeamAbilities
 {
     using System;
     using Exiled.API.Features;
+    using TeamAbilities.FacilityGlitches;
     using UnityEngine;
     using PlayerHandlers = Exiled.Events.Handlers.Player;
     using ServerHandlers = Exiled.Events.Handlers.Server;
@@ -19,6 +20,7 @@ namespace TeamAbilities
     public class Plugin : Plugin<Config, Translation>
     {
         private EventHandlers eventHandlers;
+        private FacilityGlitchHandler facilityGlitchHandler;
 
         /// <summary>
         /// Gets the only existing instance of the <see cref="Plugin"/> class.
@@ -51,6 +53,9 @@ namespace TeamAbilities
             eventHandlers = new EventHandlers(this);
             eventHandlers.Subscribe();
 
+            facilityGlitchHandler = new FacilityGlitchHandler(this);
+            facilityGlitchHandler.Start();
+
             Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16);
             base.OnEnabled();
         }
@@ -59,6 +64,9 @@ namespace TeamAbilities
         public override void OnDisabled()
         {
             Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16, false);
+
+            facilityGlitchHandler.Stop();
+            facilityGlitchHandler = null;
 
             eventHandlers.Unsubscribe();
             eventHandlers = null;

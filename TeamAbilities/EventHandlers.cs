@@ -10,7 +10,6 @@ namespace TeamAbilities
     using System.Linq;
     using Exiled.API.Features;
     using Exiled.Events.EventArgs;
-    using MEC;
     using TeamAbilities.API;
     using TeamAbilities.Components;
     using UnityEngine;

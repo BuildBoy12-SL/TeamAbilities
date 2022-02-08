@@ -24,6 +24,11 @@ namespace TeamAbilities
         public bool SingleCommander { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets all configs used for the <see cref="TeamAbilities.FacilityGlitchHandler"/>.
+        /// </summary>
+        public FacilityGlitchConfigs FacilityGlitches { get; set; } = new FacilityGlitchConfigs();
+
+        /// <summary>
         /// Gets or sets all configs used for the <see cref="Components.ScientistLocatorComponent"/>.
         /// </summary>
         public ScientistLocatorConfig ScientistLocator { get; set; } = new ScientistLocatorConfig();

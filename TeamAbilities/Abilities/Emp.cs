@@ -72,6 +72,18 @@ namespace TeamAbilities.Abilities
         public SerializableColor Color { get; set; } = new SerializableColor(0.6f, 0.1f, 0.1f);
 
         /// <summary>
+        /// Gets or sets the cassie announcement to play when the emp starts.
+        /// </summary>
+        [Description("The cassie announcement to play when the emp starts.")]
+        public string StartEmpCassie { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the cassie announcement to play when the emp ends.
+        /// </summary>
+        [Description("The cassie announcement to play when the emp ends.")]
+        public string EndEmpCassie { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the translations to use in the ability.
         /// </summary>
         public EmpTranslations Translations { get; set; } = new EmpTranslations();
@@ -102,7 +114,6 @@ namespace TeamAbilities.Abilities
             }
 
             uses++;
-            empEnabled = true;
             empCoroutine = Timing.RunCoroutine(RunEmp());
             response = Translations.UsedSuccessfully;
             return true;
@@ -110,13 +121,20 @@ namespace TeamAbilities.Abilities
 
         private IEnumerator<float> RunEmp()
         {
+            empEnabled = true;
             foreach (Room room in Map.Rooms)
                 room.Color = Color;
+
+            if (!string.IsNullOrEmpty(StartEmpCassie))
+                Cassie.Message(StartEmpCassie);
 
             yield return Timing.WaitForSeconds(Duration);
             empEnabled = false;
             foreach (Room room in Map.Rooms)
                 room.ResetColor();
+
+            if (!string.IsNullOrEmpty(EndEmpCassie))
+                Cassie.Message(EndEmpCassie);
         }
 
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
