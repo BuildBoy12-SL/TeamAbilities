@@ -35,6 +35,9 @@ namespace TeamAbilities.Configs
             set => glitchChance = Mathf.Clamp(value, 0, 100);
         }
 
+        /// <summary>
+        /// Gets or sets the minimum duration, in seconds, that a glitch can occur for.
+        /// </summary>
         public float MinimumGlitchDuration
         {
             get => minimumGlitchDuration;
@@ -47,6 +50,9 @@ namespace TeamAbilities.Configs
             }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum duration, in seconds, that a glitch can occur for.
+        /// </summary>
         public float MaximumGlitchDuration
         {
             get => maximumGlitchDuration;
@@ -59,14 +65,12 @@ namespace TeamAbilities.Configs
             }
         }
 
-        public List<RoomType> RequiredRooms { get; set; } = new List<RoomType>
+        /// <summary>
+        /// Gets or sets the rooms where all doors will be glitched.
+        /// </summary>
+        public List<RoomType> AdditionalRooms { get; set; } = new List<RoomType>
         {
             RoomType.Lcz914,
-        };
-
-        public List<KeycardPermissions> RequiredPermissions { get; set; } = new List<KeycardPermissions>
-        {
-            KeycardPermissions.None,
         };
     }
 }

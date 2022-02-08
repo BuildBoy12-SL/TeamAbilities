@@ -9,6 +9,7 @@ namespace TeamAbilities.FacilityGlitches
 {
     using System.Collections.Generic;
     using Exiled.API.Features;
+    using Interactables.Interobjects.DoorUtils;
     using MEC;
     using NorthwoodLib.Pools;
 
@@ -61,8 +62,12 @@ namespace TeamAbilities.FacilityGlitches
                 foreach ((Room room, _) in roomPair)
                 {
                     room.TurnOffLights(glitchDuration);
+                    bool isAdditionalRoom = plugin.Config.FacilityGlitches.AdditionalRooms.Contains(room.Type);
                     foreach (Door door in room.Doors)
-                        door.IsOpen = !door.IsOpen;
+                    {
+                        if (isAdditionalRoom || door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None)
+                            door.IsOpen = !door.IsOpen;
+                    }
                 }
 
                 yield return Timing.WaitForSeconds(glitchDuration);
@@ -80,7 +85,7 @@ namespace TeamAbilities.FacilityGlitches
         {
             foreach (Room room in Map.Rooms)
             {
-                if (plugin.Config.FacilityGlitches.RequiredRooms.Contains(room.Type) ||
+                if (plugin.Config.FacilityGlitches.AdditionalRooms.Contains(room.Type) ||
                     HasValidDoor(room))
                 {
                     yield return (room, new RoomState(room));
@@ -92,7 +97,7 @@ namespace TeamAbilities.FacilityGlitches
         {
             foreach (Door door in room.Doors)
             {
-                if (plugin.Config.FacilityGlitches.RequiredPermissions.Contains(door.RequiredPermissions.RequiredPermissions))
+                if (door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None)
                     return true;
             }
 

@@ -10,6 +10,7 @@ namespace TeamAbilities
     using System.ComponentModel;
     using Exiled.API.Interfaces;
     using TeamAbilities.Configs;
+    using TeamAbilities.FacilityGlitches;
 
     /// <inheritdoc />
     public class Config : IConfig
@@ -24,7 +25,7 @@ namespace TeamAbilities
         public bool SingleCommander { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets all configs used for the <see cref="TeamAbilities.FacilityGlitchHandler"/>.
+        /// Gets or sets all configs used for the <see cref="FacilityGlitchHandler"/>.
         /// </summary>
         public FacilityGlitchConfigs FacilityGlitches { get; set; } = new FacilityGlitchConfigs();
 
