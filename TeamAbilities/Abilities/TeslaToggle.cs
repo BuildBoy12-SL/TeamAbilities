@@ -66,6 +66,12 @@ namespace TeamAbilities.Abilities
         protected override bool RunAbility(Player player, out string response)
         {
             teslasDisabled = !teslasDisabled;
+            if (!teslasDisabled)
+            {
+                foreach (TeslaGate teslaGate in Map.TeslaGates)
+                    teslaGate.RpcInstantBurst();
+            }
+
             response = teslasDisabled ? Translations.TeslasDisabled : Translations.TeslasEnabled;
             return true;
         }
@@ -79,7 +85,10 @@ namespace TeamAbilities.Abilities
         private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
             if (teslasDisabled)
+            {
                 ev.IsTriggerable = false;
+                ev.IsInIdleRange = false;
+            }
         }
 
         private void OnRoundStarted()

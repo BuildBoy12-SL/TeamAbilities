@@ -85,11 +85,8 @@ namespace TeamAbilities.FacilityGlitches
         {
             foreach (Room room in Map.Rooms)
             {
-                if (plugin.Config.FacilityGlitches.AdditionalRooms.Contains(room.Type) ||
-                    HasValidDoor(room))
-                {
+                if (plugin.Config.FacilityGlitches.AdditionalRooms.Contains(room.Type) || HasValidDoor(room))
                     yield return (room, new RoomState(room));
-                }
             }
         }
 

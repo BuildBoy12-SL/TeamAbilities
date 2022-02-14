@@ -56,6 +56,22 @@ namespace TeamAbilities.API
         }
 
         /// <summary>
+        /// Gets an ability based on its name.
+        /// </summary>
+        /// <param name="query">The name to look for.</param>
+        /// <returns>The found ability or null if one is not found.</returns>
+        public static Ability Get(string query)
+        {
+            foreach (Ability ability in Registered)
+            {
+                if (string.Equals(ability.Name, query, StringComparison.OrdinalIgnoreCase))
+                    return ability;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Registers an <see cref="Ability"/>.
         /// </summary>
         /// <returns>A value indicating whether the <see cref="Ability"/> was registered or not.</returns>

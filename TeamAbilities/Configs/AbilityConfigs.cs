@@ -25,6 +25,11 @@ namespace TeamAbilities.Configs
         public Hack Hack { get; set; } = new Hack();
 
         /// <summary>
+        /// Gets or sets a configurable instance of the <see cref="Abilities.Scan"/> ability.
+        /// </summary>
+        public Scan Scan { get; set; } = new Scan();
+
+        /// <summary>
         /// Gets or sets a configurable instance of the <see cref="Abilities.SupplyDrop"/> ability.
         /// </summary>
         public SupplyDrop SupplyDrop { get; set; } = new SupplyDrop();
@@ -41,6 +46,7 @@ namespace TeamAbilities.Configs
         {
             Emp?.TryRegister();
             Hack?.TryRegister();
+            Scan?.TryRegister();
             SupplyDrop?.TryRegister();
             TeslaToggle?.TryRegister();
         }
@@ -52,6 +58,7 @@ namespace TeamAbilities.Configs
         {
             Emp?.TryUnregister();
             Hack?.TryUnregister();
+            Scan?.TryUnregister();
             SupplyDrop?.TryUnregister();
             TeslaToggle?.TryUnregister();
         }

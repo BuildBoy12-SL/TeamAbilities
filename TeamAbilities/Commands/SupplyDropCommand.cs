@@ -15,13 +15,13 @@ namespace TeamAbilities.Commands
     public class SupplyDropCommand : ICommand
     {
         /// <inheritdoc />
-        public string Command => "supplydrop";
+        public string Command { get; set; } = "supplydrop";
 
         /// <inheritdoc />
-        public string[] Aliases { get; } = Array.Empty<string>();
+        public string[] Aliases { get; set; } = Array.Empty<string>();
 
         /// <inheritdoc />
-        public string Description => "Summons a supply drop.";
+        public string Description { get; set; } = "Summons a supply drop.";
 
         /// <inheritdoc />
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

@@ -15,13 +15,13 @@ namespace TeamAbilities.Commands
     public class TeslaToggleCommand : ICommand
     {
         /// <inheritdoc />
-        public string Command => "toggleteslas";
+        public string Command { get; set; } = "toggleteslas";
 
         /// <inheritdoc />
-        public string[] Aliases { get; } = Array.Empty<string>();
+        public string[] Aliases { get; set; } = Array.Empty<string>();
 
         /// <inheritdoc />
-        public string Description => "Toggles the tesla gates.";
+        public string Description { get; set; } = "Toggles the tesla gates.";
 
         /// <inheritdoc />
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

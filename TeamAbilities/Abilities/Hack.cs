@@ -43,7 +43,8 @@ namespace TeamAbilities.Abilities
         /// <inheritdoc />
         protected override bool RunAbility(Player player, out string response)
         {
-            throw new System.NotImplementedException();
+            response = Translations.AbilityNotFound;
+            return false;
         }
 
         /// <summary>
@@ -51,6 +52,10 @@ namespace TeamAbilities.Abilities
         /// </summary>
         public class HackTranslations
         {
+            /// <summary>
+            /// Gets or sets the response to give when an ability that does not exist is attempted to be used.
+            /// </summary>
+            public string AbilityNotFound { get; set; } = "That ability does not exist.";
         }
     }
 }

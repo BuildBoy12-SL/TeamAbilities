@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="EmpCommand.cs" company="Build">
+// <copyright file="ScanCommand.cs" company="Build">
 // Copyright (c) Build. All rights reserved.
 // Licensed under the CC BY-SA 3.0 license.
 // </copyright>
@@ -12,16 +12,16 @@ namespace TeamAbilities.Commands
     using Exiled.API.Features;
 
     /// <inheritdoc />
-    public class EmpCommand : ICommand
+    public class ScanCommand : ICommand
     {
         /// <inheritdoc />
-        public string Command { get; set; } = "emp";
+        public string Command { get; set; } = "scan";
 
         /// <inheritdoc />
         public string[] Aliases { get; set; } = Array.Empty<string>();
 
         /// <inheritdoc />
-        public string Description { get; set; } = "Initiates a site-wide blackout.";
+        public string Description { get; set; } = "Scans the facility for the roles of all personnel.";
 
         /// <inheritdoc />
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
@@ -33,7 +33,7 @@ namespace TeamAbilities.Commands
                 return false;
             }
 
-            return Plugin.Instance.Config.AbilityConfigs.Emp.Execute(player, out response);
+            return Plugin.Instance.Config.AbilityConfigs.Scan.Execute(player, out response);
         }
     }
 }

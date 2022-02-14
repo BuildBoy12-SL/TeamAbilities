@@ -66,7 +66,7 @@ namespace TeamAbilities.SupplyDrops.Controllers
 
         private void AddTrigger()
         {
-            var collider = gameObject.AddComponent<BoxCollider>();
+            BoxCollider collider = gameObject.AddComponent<BoxCollider>();
             collider.isTrigger = true;
             collider.size = Vector3.one * 7.5f;
             collider.center = Vector3.up;
@@ -87,7 +87,7 @@ namespace TeamAbilities.SupplyDrops.Controllers
 
             foreach (GameObject face in Faces)
             {
-                var r = face.AddComponent<Rigidbody>();
+                Rigidbody r = face.AddComponent<Rigidbody>();
                 r.AddExplosionForce(20, transform.position, 1);
             }
 
