@@ -82,7 +82,7 @@ namespace TeamAbilities.SupplyDrops.Controllers
             if (config.PossibleItems != null)
             {
                 for (int i = 0; i < config.DroppedItems; i++)
-                    new Item(config.PossibleItems[Random.Range(0, config.PossibleItems.Count)]).Spawn(transform.position);
+                    Item.Create(config.PossibleItems[Random.Range(0, config.PossibleItems.Count)]).Spawn(transform.position);
             }
 
             foreach (GameObject face in Faces)

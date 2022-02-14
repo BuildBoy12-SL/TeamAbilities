@@ -76,10 +76,10 @@ namespace TeamAbilities.Abilities
             Dictionary<Team, int> teams = new Dictionary<Team, int>();
             foreach (Player player in Player.List)
             {
-                if (!teams.ContainsKey(player.Team))
-                    teams.Add(player.Team, 0);
+                if (!teams.ContainsKey(player.Role.Team))
+                    teams.Add(player.Role.Team, 0);
 
-                teams[player.Team]++;
+                teams[player.Role.Team]++;
             }
 
             return teams;

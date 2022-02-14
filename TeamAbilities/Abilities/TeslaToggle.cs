@@ -69,7 +69,7 @@ namespace TeamAbilities.Abilities
             if (!teslasDisabled)
             {
                 foreach (TeslaGate teslaGate in Map.TeslaGates)
-                    teslaGate.RpcInstantBurst();
+                    teslaGate.Trigger(true);
             }
 
             response = teslasDisabled ? Translations.TeslasDisabled : Translations.TeslasEnabled;
