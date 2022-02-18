@@ -8,6 +8,7 @@
 namespace TeamAbilities.Components
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using Exiled.API.Features;
     using MEC;
@@ -51,61 +52,42 @@ namespace TeamAbilities.Components
             Timing.KillCoroutines(coroutineHandle);
         }
 
-        private Player ClosestTarget(IEnumerable<Player> targets, out float closestDistance)
-        {
-            Player closestTarget = null;
-            closestDistance = float.MaxValue;
-
-            foreach (Player target in targets)
-            {
-                float distance = Vector3.Distance(player.Position, target.Position);
-                if (distance < closestDistance)
-                {
-                    closestTarget = target;
-                    closestDistance = distance;
-                }
-            }
-
-            return closestTarget;
-        }
-
         private IEnumerator<float> RunLocator()
         {
             while (true)
             {
                 yield return Timing.WaitForSeconds(config.RefreshRate);
-                List<Player> validTargets = ValidTargets();
-                if (validTargets.Count == 0)
+                List<float> targetDistances = TargetDistances();
+                if (targetDistances.Count == 0)
                     continue;
 
-                Player target = ClosestTarget(validTargets, out float distance);
-                if (target == null)
-                    continue;
-
-                double percentage = (config.MaximumRange - distance) / config.MaximumRange;
+                double percentage = (config.MaximumRange - targetDistances.Min()) / config.MaximumRange;
                 string bar = DrawBar(percentage);
 
-                string broadcast = config.Broadcast.Replace("$Bar", bar).Replace("$TargetCount", validTargets.Count.ToString());
-                player.ClearBroadcasts();
-                player.Broadcast((ushort)(config.RefreshRate + 1), broadcast);
+                string broadcast = config.Broadcast.Replace("$Bar", bar).Replace("$TargetCount", targetDistances.Count.ToString());
+                player.Broadcast((ushort)(config.RefreshRate + 1), broadcast, shouldClearPrevious: true);
             }
         }
 
-        private List<Player> ValidTargets()
+        private List<float> TargetDistances()
         {
-            List<Player> targets = new List<Player>();
-            foreach (Player target in Player.Get(RoleType.Scientist))
+            List<float> distances = new List<float>();
+            foreach (Player target in Player.List)
             {
+                if (target.Role != RoleType.Scientist)
+                    continue;
+
                 if (config.SameZoneOnly && target.Zone != player.Zone)
                     continue;
 
-                if ((player.Position - target.Position).sqrMagnitude > config.MaximumRange * config.MaximumRange)
+                float distance = Vector3.Distance(player.Position, target.Position);
+                if (distance > config.MaximumRange)
                     continue;
 
-                targets.Add(target);
+                distances.Add(distance);
             }
 
-            return targets;
+            return distances;
         }
     }
 }
