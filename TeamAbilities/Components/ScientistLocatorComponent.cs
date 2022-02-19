@@ -57,7 +57,7 @@ namespace TeamAbilities.Components
             while (true)
             {
                 yield return Timing.WaitForSeconds(config.RefreshRate);
-                List<float> targetDistances = TargetDistances();
+                List<float> targetDistances = ListPool<float>.Shared.Rent(TargetDistances());
                 if (targetDistances.Count == 0)
                     continue;
 
@@ -66,12 +66,12 @@ namespace TeamAbilities.Components
 
                 string broadcast = config.Broadcast.Replace("$Bar", bar).Replace("$TargetCount", targetDistances.Count.ToString());
                 player.Broadcast((ushort)(config.RefreshRate + 1), broadcast, shouldClearPrevious: true);
+                ListPool<float>.Shared.Return(targetDistances);
             }
         }
 
-        private List<float> TargetDistances()
+        private IEnumerable<float> TargetDistances()
         {
-            List<float> distances = new List<float>();
             foreach (Player target in Player.List)
             {
                 if (target.Role != RoleType.Scientist)
@@ -84,10 +84,8 @@ namespace TeamAbilities.Components
                 if (distance > config.MaximumRange)
                     continue;
 
-                distances.Add(distance);
+                yield return distance;
             }
-
-            return distances;
         }
     }
 }
