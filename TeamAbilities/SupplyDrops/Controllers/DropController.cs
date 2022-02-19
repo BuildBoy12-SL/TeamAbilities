@@ -53,7 +53,7 @@ namespace TeamAbilities.SupplyDrops.Controllers
 
         private void OnCollisionEnter()
         {
-            if (collided) // The box has 4 simultaneous collisions
+            if (collided)
                 return;
 
             collided = true;

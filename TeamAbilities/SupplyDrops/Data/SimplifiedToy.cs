@@ -72,7 +72,7 @@ namespace TeamAbilities.SupplyDrops.Data
             toy.transform.localEulerAngles = rotation;
             toy.transform.localScale = scale;
 
-            toy.NetworkScale = scale; // Fix collision smh (it needs both localScale and networkScale for some reason)
+            toy.NetworkScale = scale;
             toy.NetworkMaterialColor = color;
             toy.NetworkMovementSmoothing = 60;
 

@@ -10,7 +10,6 @@ namespace TeamAbilities.Configs
     using System.Collections.Generic;
     using Exiled.API.Enums;
     using UnityEngine;
-    using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
 
     /// <summary>
     /// All facility glitch configs.
