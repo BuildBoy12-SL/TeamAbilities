@@ -20,7 +20,7 @@ namespace TeamAbilities.Abilities
         private bool teslasDisabled;
 
         /// <inheritdoc />
-        public override string Command { get; set; } = "Tesla Toggle";
+        public override string Command { get; set; } = "TeslaToggle";
 
         /// <inheritdoc />
         public override string[] Aliases { get; set; } = Array.Empty<string>();

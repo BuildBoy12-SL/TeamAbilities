@@ -21,7 +21,7 @@ namespace TeamAbilities.Abilities
     public class SupplyDrop : Ability
     {
         /// <inheritdoc />
-        public override string Command { get; set; } = "Supply Drop";
+        public override string Command { get; set; } = "SupplyDrop";
 
         /// <inheritdoc />
         public override string[] Aliases { get; set; } = Array.Empty<string>();
