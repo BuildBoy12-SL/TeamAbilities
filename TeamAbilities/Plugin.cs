@@ -36,7 +36,7 @@ namespace TeamAbilities
         public override string Prefix => "TeamAbilities";
 
         /// <inheritdoc />
-        public override Version RequiredExiledVersion { get; } = new Version(4, 2, 3);
+        public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
 
         /// <inheritdoc />
         public override Version Version { get; } = new Version(1, 0, 0);
