@@ -77,6 +77,20 @@ namespace TeamAbilities.Abilities
         public SupplyDropTranslations Translations { get; set; } = new SupplyDropTranslations();
 
         /// <inheritdoc />
+        protected override void SubscribeEvents()
+        {
+            Physics.IgnoreLayerCollision(DropLayer, 16);
+            base.SubscribeEvents();
+        }
+
+        /// <inheritdoc />
+        protected override void UnsubscribeEvents()
+        {
+            Physics.IgnoreLayerCollision(DropLayer, 16, false);
+            base.UnsubscribeEvents();
+        }
+
+        /// <inheritdoc />
         protected override bool RunAbility(Player player, out string response)
         {
             if (SurfaceOnly && player.Zone != ZoneType.Surface)

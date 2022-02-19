@@ -10,7 +10,6 @@ namespace TeamAbilities
     using System;
     using Exiled.API.Features;
     using TeamAbilities.FacilityGlitches;
-    using UnityEngine;
     using PlayerHandlers = Exiled.Events.Handlers.Player;
     using ServerHandlers = Exiled.Events.Handlers.Server;
 
@@ -55,15 +54,12 @@ namespace TeamAbilities
             facilityGlitchHandler = new FacilityGlitchHandler(this);
             facilityGlitchHandler.Start();
 
-            Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16);
             base.OnEnabled();
         }
 
         /// <inheritdoc />
         public override void OnDisabled()
         {
-            Physics.IgnoreLayerCollision(Config.AbilityConfigs.SupplyDrop.DropLayer, 16, false);
-
             facilityGlitchHandler.Stop();
             facilityGlitchHandler = null;
 
