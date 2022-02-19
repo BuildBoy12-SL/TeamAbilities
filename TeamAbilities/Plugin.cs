@@ -48,7 +48,6 @@ namespace TeamAbilities
             Instance = this;
 
             Config.AbilityConfigs.RegisterAbilities();
-            Config.CommandConfigs.RegisterCommands();
 
             eventHandlers = new EventHandlers(this);
             eventHandlers.Subscribe();
@@ -72,7 +71,6 @@ namespace TeamAbilities
             eventHandlers = null;
 
             Config.AbilityConfigs.UnregisterAbilities();
-            Config.CommandConfigs.UnregisterCommands();
 
             Instance = null;
 

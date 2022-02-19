@@ -83,7 +83,7 @@ namespace TeamAbilities.FacilityGlitches
 
         private IEnumerable<(Room, RoomState)> GetRooms()
         {
-            foreach (Room room in Map.Rooms)
+            foreach (Room room in Room.List)
             {
                 if (plugin.Config.FacilityGlitches.AdditionalRooms.Contains(room.Type) || HasValidDoor(room))
                     yield return (room, new RoomState(room));

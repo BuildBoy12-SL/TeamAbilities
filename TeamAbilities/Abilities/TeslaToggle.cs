@@ -7,6 +7,7 @@
 
 namespace TeamAbilities.Abilities
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using Exiled.API.Features;
@@ -19,7 +20,13 @@ namespace TeamAbilities.Abilities
         private bool teslasDisabled;
 
         /// <inheritdoc />
-        public override string Name { get; set; } = "Tesla Toggle";
+        public override string Command { get; set; } = "Tesla Toggle";
+
+        /// <inheritdoc />
+        public override string[] Aliases { get; set; } = Array.Empty<string>();
+
+        /// <inheritdoc />
+        public override string Description { get; set; } = "Toggles the tesla gates.";
 
         /// <inheritdoc />
         public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>
@@ -68,7 +75,7 @@ namespace TeamAbilities.Abilities
             teslasDisabled = !teslasDisabled;
             if (!teslasDisabled)
             {
-                foreach (TeslaGate teslaGate in Map.TeslaGates)
+                foreach (TeslaGate teslaGate in TeslaGate.List)
                     teslaGate.Trigger(true);
             }
 

@@ -10,13 +10,15 @@ namespace TeamAbilities.API
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CommandSystem;
     using Exiled.API.Features;
+    using RemoteAdmin;
     using UnityEngine;
 
     /// <summary>
     /// The ability base class.
     /// </summary>
-    public abstract class Ability
+    public abstract class Ability : ICommand
     {
         private readonly Dictionary<Player, float> cooldowns = new Dictionary<Player, float>();
         private float globalCooldown;
@@ -26,10 +28,14 @@ namespace TeamAbilities.API
         /// </summary>
         public static List<Ability> Registered { get; } = new List<Ability>();
 
-        /// <summary>
-        /// Gets or sets the name of the ability.
-        /// </summary>
-        public abstract string Name { get; set; }
+        /// <inheritdoc />
+        public abstract string Command { get; set; }
+
+        /// <inheritdoc/>
+        public abstract string[] Aliases { get; set; }
+
+        /// <inheritdoc />
+        public abstract string Description { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of roles that can use the ability.
@@ -64,7 +70,7 @@ namespace TeamAbilities.API
         {
             foreach (Ability ability in Registered)
             {
-                if (string.Equals(ability.Name, query, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(ability.Command, query, StringComparison.OrdinalIgnoreCase))
                     return ability;
             }
 
@@ -79,17 +85,18 @@ namespace TeamAbilities.API
         {
             if (Registered.Contains(this))
             {
-                Log.Warn($"Couldn't register the ability '{Name}' as it already exists.");
+                Log.Warn($"Couldn't register the ability '{Command}' as it already exists.");
                 return false;
             }
 
-            if (Registered.Any(ability => string.Equals(ability.Name, Name, StringComparison.OrdinalIgnoreCase)))
+            if (Registered.Any(ability => string.Equals(ability.Command, Command, StringComparison.OrdinalIgnoreCase)))
             {
-                Log.Warn($"Attempted to add an ability with a duplicate name of {Name}.");
+                Log.Warn($"Attempted to add an ability with a duplicate name of {Command}.");
                 return false;
             }
 
             Registered.Add(this);
+            QueryProcessor.DotCommandHandler.RegisterCommand(this);
             SubscribeEvents();
             return true;
         }
@@ -101,13 +108,27 @@ namespace TeamAbilities.API
         public bool TryUnregister()
         {
             UnsubscribeEvents();
+            QueryProcessor.DotCommandHandler.UnregisterCommand(this);
             if (!Registered.Remove(this))
             {
-                Log.Warn($"Cannot unregister an ability with the name of {Name} as it was not registered!");
+                Log.Warn($"Cannot unregister an ability with the name of {Command} as it was not registered!");
                 return false;
             }
 
             return true;
+        }
+
+        /// <inheritdoc />
+        public virtual bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        {
+            Player player = Player.Get(sender);
+            if (player == null)
+            {
+                response = "This command must be executed from the game level.";
+                return false;
+            }
+
+            return Execute(player, out response);
         }
 
         /// <summary>

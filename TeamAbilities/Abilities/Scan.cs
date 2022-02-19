@@ -7,6 +7,7 @@
 
 namespace TeamAbilities.Abilities
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Text;
@@ -21,7 +22,13 @@ namespace TeamAbilities.Abilities
         private CoroutineHandle scanCoroutine;
 
         /// <inheritdoc />
-        public override string Name { get; set; } = "Scan";
+        public override string Command { get; set; } = "Scan";
+
+        /// <inheritdoc />
+        public override string[] Aliases { get; set; } = Array.Empty<string>();
+
+        /// <inheritdoc />
+        public override string Description { get; set; } = "Scans the facility for the roles of all personnel.";
 
         /// <inheritdoc />
         public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>

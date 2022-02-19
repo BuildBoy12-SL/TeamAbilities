@@ -7,6 +7,7 @@
 
 namespace TeamAbilities.Abilities
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using Exiled.API.Enums;
@@ -24,7 +25,13 @@ namespace TeamAbilities.Abilities
         private bool empEnabled;
 
         /// <inheritdoc />
-        public override string Name { get; set; } = "EMP";
+        public override string Command { get; set; } = "EMP";
+
+        /// <inheritdoc />
+        public override string[] Aliases { get; set; } = Array.Empty<string>();
+
+        /// <inheritdoc />
+        public override string Description { get; set; } = "Initiates a site-wide blackout.";
 
         /// <inheritdoc />
         public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>
@@ -122,7 +129,7 @@ namespace TeamAbilities.Abilities
         private IEnumerator<float> RunEmp()
         {
             empEnabled = true;
-            foreach (Room room in Map.Rooms)
+            foreach (Room room in Room.List)
                 room.Color = Color;
 
             if (!string.IsNullOrEmpty(StartEmpCassie))
@@ -130,7 +137,7 @@ namespace TeamAbilities.Abilities
 
             yield return Timing.WaitForSeconds(Duration);
             empEnabled = false;
-            foreach (Room room in Map.Rooms)
+            foreach (Room room in Room.List)
                 room.ResetColor();
 
             if (!string.IsNullOrEmpty(EndEmpCassie))

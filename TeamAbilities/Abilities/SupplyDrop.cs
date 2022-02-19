@@ -7,6 +7,7 @@
 
 namespace TeamAbilities.Abilities
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using Exiled.API.Enums;
@@ -14,12 +15,19 @@ namespace TeamAbilities.Abilities
     using TeamAbilities.API;
     using TeamAbilities.SupplyDrops.Data;
     using UnityEngine;
+    using Random = UnityEngine.Random;
 
     /// <inheritdoc />
     public class SupplyDrop : Ability
     {
         /// <inheritdoc />
-        public override string Name { get; set; } = "Supply Drop";
+        public override string Command { get; set; } = "Supply Drop";
+
+        /// <inheritdoc />
+        public override string[] Aliases { get; set; } = Array.Empty<string>();
+
+        /// <inheritdoc />
+        public override string Description { get; set; } = "Summons a supply drop.";
 
         /// <inheritdoc />
         public override HashSet<RoleType> RequiredRoles { get; set; } = new HashSet<RoleType>
