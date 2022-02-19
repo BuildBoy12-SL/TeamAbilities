@@ -59,7 +59,10 @@ namespace TeamAbilities.Components
                 yield return Timing.WaitForSeconds(config.RefreshRate);
                 List<float> targetDistances = ListPool<float>.Shared.Rent(TargetDistances());
                 if (targetDistances.Count == 0)
+                {
+                    ListPool<float>.Shared.Return(targetDistances);
                     continue;
+                }
 
                 double percentage = (config.MaximumRange - targetDistances.Min()) / config.MaximumRange;
                 string bar = DrawBar(percentage);
